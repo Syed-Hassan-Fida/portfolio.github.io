@@ -1,0 +1,458 @@
+/* Custom Redesign CSS */
+
+/* --- What I Do (Services) Redesign --- */
+.rn-service-area {
+    background: transparent;
+    /* Ensure background lets the main bg show through */
+}
+
+/* Neutralize original template effects */
+.rn-service::before,
+.rn-service:hover::before {
+    display: none !important;
+    background: none !important;
+    opacity: 0 !important;
+}
+
+.rn-service .inner>*,
+.rn-service:hover .inner>* {
+    transform: none !important;
+    transition: none !important;
+}
+
+.rn-service .inner .content .read-more-button {
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    transform: none !important;
+}
+
+
+.rn-service {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.rn-service:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--color-primary);
+}
+
+.rn-service .inner {
+    text-align: left;
+}
+
+.rn-service .icon {
+    margin-bottom: 25px;
+    font-size: 40px;
+    color: var(--color-primary);
+    background: rgba(59, 130, 246, 0.1);
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.rn-service:hover .icon {
+    background: var(--color-primary);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.rn-service .content .title a {
+    font-size: 24px;
+    font-weight: 700;
+    color: #f8fafc;
+    transition: color 0.3s;
+}
+
+.rn-service:hover .content .title a {
+    color: var(--color-primary);
+}
+
+.rn-service .content .description {
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.rn-service .read-more-button {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: 600;
+    transition: margin-left 0.3s;
+}
+
+.rn-service:hover .read-more-button {
+    margin-left: 5px;
+}
+
+/* --- Testimonials Redesign --- */
+.rn-testimonial-area {
+    position: relative;
+    z-index: 1;
+}
+
+.rn-testimonial {
+    background: rgba(255, 255, 255, 0.05);
+    /* Glassmorphism base */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Subtle border */
+    border-radius: 20px;
+    /* Softer rounded corners */
+    padding: 40px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Springy transition */
+    height: 100%;
+    /* Equal height cards */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect for Testimonial Card */
+.rn-testimonial:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* Deep shadow on hover */
+}
+
+/* Quote Icon Decoration */
+.rn-testimonial::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 120px;
+    line-height: 1;
+    font-family: sans-serif;
+    color: rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+    transition: all 0.4s ease;
+}
+
+.rn-testimonial:hover::before {
+    color: rgba(59, 130, 246, 0.1);
+    /* Primary color low opacity */
+    transform: scale(1.1) rotate(10deg);
+}
+
+.rn-testimonial .inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.rn-testimonial .client-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+}
+
+.rn-testimonial .thumbnail {
+    flex-shrink: 0;
+    margin-right: 20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.rn-testimonial:hover .thumbnail {
+    border-color: var(--color-primary);
+}
+
+.rn-testimonial .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rn-testimonial .title-wrapper {
+    flex-grow: 1;
+}
+
+.rn-testimonial .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #f8fafc;
+    letter-spacing: 0.5px;
+}
+
+.rn-testimonial .designation {
+    font-size: 14px;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.rn-testimonial .description {
+    flex-grow: 1;
+}
+
+.rn-testimonial .description p {
+    font-size: 17px;
+    /* Slightly larger text */
+    line-height: 1.8;
+    color: #cbd5e1;
+    /* Lighter text for better contrast */
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+
+/* --- Fix Text Colors --- */
+
+/* Find with me text */
+.social-share-style-1 .title {
+    color: #f8fafc !important;
+    /* Ensure it's white/light */
+    font-weight: 500;
+    opacity: 1;
+}
+
+/* My Pricing Section */
+#pricing .section-title .subtitle {
+    color: var(--color-primary) !important;
+}
+
+#pricing .section-title .title {
+    color: #f8fafc !important;
+}
+
+/* Pricing Card Text Visibility */
+.rn-pricing .pricing-header .title {
+    color: #f8fafc !important;
+}
+
+.rn-pricing .pricing-header span {
+    color: #cbd5e1 !important;
+}
+
+.rn-pricing .pricing-body .description {
+    color: #94a3b8 !important;
+}
+
+.rn-pricing .check-wrapper .check p {
+    color: #cbd5e1 !important;
+}
+/* --- Certifications Section --- */
+.rn-certificate-area {
+    position: relative;
+    z-index: 1;
+}
+
+.rn-certificate {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 35px;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rn-certificate:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--color-primary);
+}
+
+.rn-certificate .inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.rn-certificate .icon {
+    margin-bottom: 25px;
+    font-size: 30px;
+    color: var(--color-primary);
+    background: rgba(59, 130, 246, 0.1);
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.rn-certificate:hover .icon {
+    background: var(--color-primary);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.rn-certificate .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.rn-certificate .header-info {
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.rn-certificate .title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.rn-certificate .issuer {
+    font-size: 14px;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    display: block;
+}
+
+.rn-certificate .date {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.rn-certificate .description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.rn-certificate .cert-logo {
+    margin-top: auto;
+    max-height: 40px;
+    opacity: 0.8;
+}
+
+/* --- Tech Stack Section --- */
+.tech-stack-wrapper {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(5px);
+}
+
+.category-title {
+    font-size: 18px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.tech-badge {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 30px;
+    background: rgba(33, 36, 40, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    cursor: default;
+}
+
+.tech-badge:hover {
+    background: var(--color-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(255, 1, 79, 0.3);
+    border-color: var(--color-primary);
+}
+
+/* --- GitHub CTA Section --- */
+.github-cta-box {
+    background: linear-gradient(145deg, #1e2024, #23272b);
+    border-radius: 20px;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.github-cta-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 1, 79, 0.1) 0%, transparent 70%);
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.github-cta-box .inner {
+    position: relative;
+    z-index: 1;
+}
+
+.github-cta-box .title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.github-cta-box .description {
+    font-size: 18px;
+    color: #c4cfde;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.github-cta-box .rn-btn i {
+    margin-right: 8px;
+    vertical-align: middle;
+}
