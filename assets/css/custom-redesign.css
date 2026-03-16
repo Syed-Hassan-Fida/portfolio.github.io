@@ -228,12 +228,54 @@
 
 /* --- Fix Text Colors --- */
 
-/* Find with me text */
+/* Find with me text and icon fixes */
 .social-share-style-1 .title {
     color: #f8fafc !important;
-    /* Ensure it's white/light */
     font-weight: 500;
     opacity: 1;
+}
+
+/* Fix Find With Me icons visibility and hover */
+.social-share-style-1 .social-share li a,
+.social-area .social-icone a {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.social-share-style-1 .social-share li a:hover,
+.social-area .social-icone a:hover {
+    background: var(--color-primary) !important;
+    color: #fff !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.social-share-style-1 .social-share li a svg,
+.social-area .social-icone a svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Neutralize bluish hover from original template if any remains */
+.social-share-style-1 .social-share li a::before {
+    display: none !important;
+}
+
+/* Service icon specifically */
+.rn-service .icon svg {
+    width: 40px;
+    height: 40px;
+    stroke: currentColor;
+    fill: none;
+    vertical-align: middle;
 }
 
 /* My Pricing Section */

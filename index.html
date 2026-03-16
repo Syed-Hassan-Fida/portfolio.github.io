@@ -38,7 +38,8 @@
                 <ul class="primary-menu nav nav-pills">
                     <li class="nav-item"><a class="nav-link smoth-animation-two active" href="#home"><i
                                 data-feather="home"></i> Home</a></li>
-                    <li class="nav-item"><a class="nav-link smoth-animation-two" href="#features">Services</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation-two" href="#features"><i
+                                data-feather="grid"></i>Services</a></li>
                     <li class="nav-item"><a class="nav-link smoth-animation-two" href="#portfolio"><i
                                 data-feather="layers"></i>Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link smoth-animation-two" href="#resume"><i
@@ -61,6 +62,10 @@
                         </li>
                         <li class="linkedin"><a href="https://www.linkedin.com/in/syed-hassan-fida" target="_blank"><i
                                     data-feather="linkedin"></i></a>
+                        </li>
+                        <li class="upwork"><a
+                                href="https://www.upwork.com/freelancers/~0190e1383dae490080?mp_source=share"
+                                target="_blank"><i data-feather="briefcase"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -127,6 +132,10 @@
                         <li class="linkedin"><a href="https://www.linkedin.com/in/syed-hassan-fida" target="_blank"><i
                                     data-feather="linkedin"></i></a>
                         </li>
+                        <li class="upwork"><a
+                                href="https://www.upwork.com/freelancers/~0190e1383dae490080?mp_source=share"
+                                target="_blank"><i data-feather="briefcase"></i></a>
+                        </li>
                     </ul>
                 </div>
                 <!-- end -->
@@ -161,7 +170,7 @@
                             </p>
                             <div class="button-area" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
                                 <a class="rn-btn" href="#contacts"><span>HIRE ME</span></a>
-                                <a class="rn-btn" href="assets/Updated-Syed-Hassan-Fida-Resume.pdf"
+                                <a class="rn-btn" href="assets/Syed-Hassan-Fida-updated.pdf"
                                     target="_blank"><span>DOWNLOAD CV</span></a>
                             </div>
                         </div>
@@ -1179,6 +1188,8 @@
                                             data-feather="linkedin"></i></a>
                                     <a href="https://github.com/Syed-Hassan-Fida" target="_blank"><i
                                             data-feather="github"></i></a>
+                                    <a href="https://www.upwork.com/freelancers/~0190e1383dae490080?mp_source=share"
+                                        target="_blank"><i data-feather="briefcase"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -1186,14 +1197,13 @@
                     <div data-aos-delay="600" class="col-lg-7 contact-input">
                         <div class="contact-form-wrapper">
                             <div class="introduce">
-                                <form class="rnt-contact-form rwt-dynamic-form row" id="contact-form" method="POST"
-                                    action="mail.php">
+                                <form class="rnt-contact-form row" id="contact-form">
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="contact-name">Your Name</label>
                                             <input class="form-control form-control-lg" name="contact-name"
-                                                id="contact-name" type="text">
+                                                id="contact-name" type="text" required>
                                         </div>
                                     </div>
 
@@ -1201,7 +1211,7 @@
                                         <div class="form-group">
                                             <label for="contact-phone">Phone Number</label>
                                             <input class="form-control" name="contact-phone" id="contact-phone"
-                                                type="text">
+                                                type="text" required>
                                         </div>
                                     </div>
 
@@ -1209,7 +1219,7 @@
                                         <div class="form-group">
                                             <label for="contact-email">Email</label>
                                             <input class="form-control form-control-sm" id="contact-email"
-                                                name="contact-email" type="email">
+                                                name="contact-email" type="email" required>
                                         </div>
                                     </div>
 
@@ -1217,7 +1227,7 @@
                                         <div class="form-group">
                                             <label for="subject">subject</label>
                                             <input class="form-control form-control-sm" id="subject" name="subject"
-                                                type="text">
+                                                type="text" required>
                                         </div>
                                     </div>
 
@@ -1225,8 +1235,12 @@
                                         <div class="form-group">
                                             <label for="contact-message">Your Message</label>
                                             <textarea name="contact-message" id="contact-message" cols="30"
-                                                rows="10"></textarea>
+                                                rows="10" required></textarea>
                                         </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-12">
+                                        <div id="form-message" style="display:none; margin-bottom:20px; padding:15px; border-radius:10px; font-weight:500; text-align:center;"></div>
                                     </div>
 
                                     <div class="col-lg-12">
@@ -1461,6 +1475,49 @@
     <script src="assets/js/vendor/wow.js"></script>
     <script src="assets/js/vendor/aos.js"></script>
     <script src="assets/js/vendor/particles.js"></script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <script type="text/javascript">
+        (function () {
+            // Replace with your actual Public Key from EmailJS
+            emailjs.init("F1RdC7tpu6b1XMWXl");
+        })();
+
+        $(document).ready(function () {
+            $('#contact-form').on('submit', function (event) {
+                event.preventDefault();
+
+                const btn = $('#submit');
+                const btnText = btn.find('span');
+                const originalText = btnText.text();
+
+                btn.prop('disabled', true);
+                btnText.text('SENDING...');
+
+                // Use your Service ID and Template ID from EmailJS
+                emailjs.sendForm('service_rmp2qg8', 'template_p4qsg09', this)
+                    .then(function () {
+                        $('#form-message').text('SENT SUCCESSFULLY!').css({'display': 'block', 'background': 'rgba(40, 167, 69, 0.1)', 'color': '#28a745', 'border': '1px solid #28a745'});
+                        $('#contact-form')[0].reset();
+                        setTimeout(() => {
+                            $('#form-message').fadeOut();
+                            btn.prop('disabled', false);
+                            btnText.text(originalText);
+                        }, 5000);
+                    }, function (error) {
+                        $('#form-message').text('FAILED... TRY AGAIN').css({'display': 'block', 'background': 'rgba(220, 53, 69, 0.1)', 'color': '#dc3545', 'border': '1px solid #dc3545'});
+                        console.log('FAILED...', error);
+                        setTimeout(() => {
+                            $('#form-message').fadeOut();
+                            btn.prop('disabled', false);
+                            btnText.text(originalText);
+                        }, 5000);
+                    });
+            });
+        });
+    </script>
     <!-- main JS -->
     <script src="assets/js/main.js"></script>
 
