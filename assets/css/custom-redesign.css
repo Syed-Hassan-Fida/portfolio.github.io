@@ -303,6 +303,7 @@
 .rn-pricing .check-wrapper .check p {
     color: #cbd5e1 !important;
 }
+
 /* --- Certifications Section --- */
 .rn-certificate-area {
     position: relative;
@@ -438,7 +439,7 @@
     font-size: 15px;
     font-weight: 500;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: default;
 }
 
