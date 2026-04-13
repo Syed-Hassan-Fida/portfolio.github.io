@@ -4,13 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Syed Hassan Fida | Senior Software Architect</title>
-    <meta name="description" content="Senior Full-Stack Engineer & Web Architect with 5+ years of expertise in Enterprise Systems, MERN, Laravel, and Cloud Infrastructure.">
+    <title>Syed Hassan Fida | Senior Full-Stack Engineer & Web Architect</title>
+    <meta name="description" content="Senior Full-Stack Engineer & Web Architect with 5+ years of expertise in MERN, Laravel, Next.js, AWS, and Enterprise Systems.">
     
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="https://img.freepik.com/free-vector/gradient-coding-logo-template_23-2148809439.jpg?size=338&ext=jpg">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%236366f1'/><text x='50' y='68' font-size='55' font-family='system-ui' font-weight='bold' fill='white' text-anchor='middle'>SH</text></svg>">
 
-    <!-- Tailwind CSS Play CDN -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,14 +23,22 @@
                         accent: '#06b6d4',
                         dark: '#0f172a',
                         darker: '#020617',
+                        surface: '#0b1121',
                     },
                     fontFamily: {
-                        outfit: ['Outfit', 'sans-serif'],
+                        grotesk: ['"Space Grotesk"', 'sans-serif'],
                         inter: ['Inter', 'sans-serif'],
                     },
                     animation: {
                         'gradient-x': 'gradient-x 15s ease infinite',
                         'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'slide-up': 'slide-up 0.8s ease-out forwards',
+                        'marquee': 'marquee 40s linear infinite',
+                        'marquee-reverse': 'marquee-reverse 40s linear infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'border-flow': 'border-flow 3s linear infinite',
                     },
                     keyframes: {
                         'gradient-x': {
@@ -38,9 +46,30 @@
                             '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
                         },
                         'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
+                            '0%, 100%': { transform: 'translateY(0px)' },
                             '50%': { transform: 'translateY(-20px)' },
-                        }
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+                        },
+                        'slide-up': {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'marquee': {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        'marquee-reverse': {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0%)' },
+                        },
+                        'border-flow': {
+                            '0%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                            '100%': { 'background-position': '0% 50%' },
+                        },
                     }
                 }
             }
@@ -50,7 +79,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -58,604 +87,1092 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- AOS (Animate on Scroll) -->
+    <!-- AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
         [x-cloak] { display: none !important; }
-        
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #020617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-logo {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex; align-items: center; justify-content: center;
+            animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+
+        /* Glass */
         .glass {
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .glass-dark {
-            background: rgba(2, 6, 23, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
+        /* Text Gradient */
         .text-gradient {
-            background: linear-gradient(to right, #6366f1, #a855f7, #06b6d4);
+            background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-gradient-warm {
+            background: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .video-bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        /* Video BG */
+        .video-bg {
+            position: absolute; inset: 0; z-index: 0; overflow: hidden;
+        }
+        .video-bg video, .video-bg img {
+            width: 100%; height: 100%; object-fit: cover;
         }
 
-        .video-bg-container video {
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
+        /* Animated border */
+        .animated-border {
+            position: relative;
+            background: #0b1121;
+            border-radius: 1.5rem;
         }
-
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #020617;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #6366f1;
-        }
-
-        .timeline-item::before {
+        .animated-border::before {
             content: '';
             position: absolute;
-            left: -9px;
-            top: 0;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #6366f1;
-            border: 4px solid #020617;
-            z-index: 10;
+            inset: -1px;
+            border-radius: 1.5rem;
+            background: linear-gradient(90deg, #6366f1, #a855f7, #06b6d4, #6366f1);
+            background-size: 300% 100%;
+            animation: border-flow 3s linear infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
-        .timeline-line {
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: rgba(255,255,255,0.1);
+        .animated-border:hover::before {
+            opacity: 1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+        /* Typing cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #6366f1;
+            font-weight: 100;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Timeline */
+        .timeline-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #6366f1; border: 3px solid #020617;
+            position: absolute; left: 50%; transform: translateX(-50%);
+            top: 2rem; z-index: 10;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Project card image hover */
+        .project-img-wrap {
+            overflow: hidden; position: relative;
+        }
+        .project-img-wrap img {
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .project-card:hover .project-img-wrap img {
+            transform: scale(1.08);
+        }
+        .project-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.3) 50%, transparent 100%);
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+        }
+
+        /* Skill bar animation */
+        .skill-bar-fill {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Smooth section transitions */
+        section {
+            position: relative; overflow: hidden;
+        }
+
+        /* Noise texture overlay */
+        .noise::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1; opacity: 0.4;
+        }
+
+        /* Counter animation */
+        .counter-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Marquee pause on hover */
+        .marquee-track:hover {
+            animation-play-state: paused;
         }
     </style>
 </head>
 
-<body class="bg-darker text-slate-300 font-inter selection:bg-primary selection:text-white custom-scrollbar" x-data="{ mobileMenu: false, scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
+<body class="bg-darker text-slate-300 font-inter selection:bg-primary/30 selection:text-white"
+      x-data="{
+          mobileMenu: false,
+          scrolled: false,
+          activeSection: 'home',
+          typedText: '',
+          typedIndex: 0,
+          typedPhraseIndex: 0,
+          typedPhrases: ['MERN Stack Developer', 'Laravel Architect', 'Cloud Engineer (AWS)', 'Enterprise System Builder', 'Full-Stack Problem Solver'],
+          typedDeleting: false,
+          startTyping() {
+              const phrase = this.typedPhrases[this.typedPhraseIndex];
+              if (!this.typedDeleting) {
+                  if (this.typedIndex < phrase.length) {
+                      this.typedText = phrase.substring(0, this.typedIndex + 1);
+                      this.typedIndex++;
+                      setTimeout(() => this.startTyping(), 80);
+                  } else {
+                      setTimeout(() => { this.typedDeleting = true; this.startTyping(); }, 2000);
+                  }
+              } else {
+                  if (this.typedIndex > 0) {
+                      this.typedIndex--;
+                      this.typedText = phrase.substring(0, this.typedIndex);
+                      setTimeout(() => this.startTyping(), 40);
+                  } else {
+                      this.typedDeleting = false;
+                      this.typedPhraseIndex = (this.typedPhraseIndex + 1) % this.typedPhrases.length;
+                      setTimeout(() => this.startTyping(), 500);
+                  }
+              }
+          }
+      }"
+      x-init="startTyping()"
+      @scroll.window="scrolled = (window.pageYOffset > 50)">
 
-    <!-- Nav -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300" 
-         :class="scrolled ? 'glass py-3' : 'bg-transparent py-6'">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="#" class="font-outfit text-2xl font-bold text-white flex items-center gap-2">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center">
-                    <span class="text-white">S</span>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <span class="text-white font-grotesk font-bold text-xl">SH</span>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- NAVIGATION -->
+    <!-- ============================================= -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-500"
+         :class="scrolled ? 'glass py-3 shadow-2xl shadow-black/20' : 'bg-transparent py-5'">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300">
+                    <span class="text-white font-grotesk font-bold text-sm">SH</span>
                 </div>
-                <span class="hidden sm:block">Syed<span class="text-primary text-sm align-top leading-none">.</span>Hassan</span>
+                <span class="font-grotesk text-xl font-bold text-white hidden sm:block">
+                    Syed<span class="text-primary">.</span>Hassan
+                </span>
             </a>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center gap-8 font-medium">
-                <a href="#home" class="hover:text-primary transition-colors">Home</a>
-                <a href="#about" class="hover:text-primary transition-colors">About</a>
-                <a href="#services" class="hover:text-primary transition-colors">Expertise</a>
-                <a href="#portfolio" class="hover:text-primary transition-colors">Projects</a>
-                <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
-                <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank" class="px-5 py-2.5 rounded-full bg-primary/10 border border-primary/50 text-primary hover:bg-primary hover:text-white transition-all duration-300">Hire Me</a>
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center gap-1">
+                <a href="#home" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-white hover:bg-white/5 transition-all">Home</a>
+                <a href="#about" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-white hover:bg-white/5 transition-all">About</a>
+                <a href="#experience" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-white hover:bg-white/5 transition-all">Experience</a>
+                <a href="#projects" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-white hover:bg-white/5 transition-all">Projects</a>
+                <a href="#skills" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-white hover:bg-white/5 transition-all">Skills</a>
+                <a href="#education" class="px-4 py-2 rounded-lg text-sm font-medium hover:text-white hover:bg-white/5 transition-all">Education</a>
+                <div class="w-px h-6 bg-white/10 mx-3"></div>
+                <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank"
+                   class="px-5 py-2.5 rounded-full bg-primary text-white text-sm font-semibold hover:bg-indigo-500 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 flex items-center gap-2">
+                    <span>Hire Me</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                </a>
             </div>
 
             <!-- Mobile Toggle -->
-            <button class="md:hidden text-white" @click="mobileMenu = !mobileMenu">
-                <i data-lucide="menu" x-show="!mobileMenu"></i>
-                <i data-lucide="x" x-show="mobileMenu"></i>
+            <button class="lg:hidden w-10 h-10 rounded-lg glass flex items-center justify-center" @click="mobileMenu = !mobileMenu">
+                <i data-lucide="menu" class="w-5 h-5" x-show="!mobileMenu"></i>
+                <i data-lucide="x" class="w-5 h-5" x-show="mobileMenu" x-cloak></i>
             </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div x-show="mobileMenu" 
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 -translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="absolute top-full left-0 w-full glass-dark border-t border-white/5 py-8 px-6 md:hidden flex flex-col gap-6 font-medium text-lg"
-             x-cloak>
-            <a href="#home" @click="mobileMenu = false">Home</a>
-            <a href="#about" @click="mobileMenu = false">About</a>
-            <a href="#experience" @click="mobileMenu = false">Experience</a>
-            <a href="#portfolio" @click="mobileMenu = false">Projects</a>
-            <a href="#skills" @click="mobileMenu = false">Skills</a>
-            <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank" class="text-primary">Hire Me</a>
+        <div x-show="mobileMenu" x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4"
+             class="lg:hidden absolute top-full left-0 w-full glass border-t border-white/5" x-cloak>
+            <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-2">
+                <a href="#home" @click="mobileMenu = false" class="px-4 py-3 rounded-xl hover:bg-white/5 font-medium transition-all">Home</a>
+                <a href="#about" @click="mobileMenu = false" class="px-4 py-3 rounded-xl hover:bg-white/5 font-medium transition-all">About</a>
+                <a href="#experience" @click="mobileMenu = false" class="px-4 py-3 rounded-xl hover:bg-white/5 font-medium transition-all">Experience</a>
+                <a href="#projects" @click="mobileMenu = false" class="px-4 py-3 rounded-xl hover:bg-white/5 font-medium transition-all">Projects</a>
+                <a href="#skills" @click="mobileMenu = false" class="px-4 py-3 rounded-xl hover:bg-white/5 font-medium transition-all">Skills</a>
+                <a href="#education" @click="mobileMenu = false" class="px-4 py-3 rounded-xl hover:bg-white/5 font-medium transition-all">Education</a>
+                <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank"
+                   class="mt-2 px-4 py-3 rounded-xl bg-primary text-white font-semibold text-center">Hire Me on Upwork</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="video-bg-container">
-            <video autoplay muted loop playsinline poster="https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-lines_23-2148809439.jpg">
+    <!-- Scroll Progress Bar -->
+    <div class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-primary via-secondary to-accent z-[60] transition-all duration-150"
+         :style="'width: ' + (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%'"
+         @scroll.window="$el.style.width = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%'">
+    </div>
+
+    <!-- ============================================= -->
+    <!-- HERO SECTION -->
+    <!-- ============================================= -->
+    <section id="home" class="relative min-h-screen flex items-center noise">
+        <!-- Video Background -->
+        <div class="video-bg">
+            <video autoplay muted loop playsinline class="opacity-20">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-dark-plexus-background-2708-large.mp4" type="video/mp4">
             </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-darker/50 via-darker/30 to-darker"></div>
         </div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-5xl mx-auto" data-aos="fade-up">
-                <span class="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-semibold tracking-wider uppercase">
-                    5+ Years of Architecture Expertise
-                </span>
-                <h1 class="font-outfit text-5xl md:text-8xl font-extrabold text-white leading-tight mb-8">
-                    Senior Full-Stack & <br><span class="text-gradient">Web Architect</span>
+
+        <!-- Floating Orbs -->
+        <div class="orb w-[500px] h-[500px] bg-primary/20 top-1/4 -left-48 animate-pulse-glow"></div>
+        <div class="orb w-[400px] h-[400px] bg-secondary/15 bottom-1/4 -right-32 animate-pulse-glow" style="animation-delay: 2s;"></div>
+        <div class="orb w-[300px] h-[300px] bg-accent/10 top-10 right-1/4 animate-pulse-glow" style="animation-delay: 4s;"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 pt-28 pb-20 w-full">
+            <div class="max-w-4xl" data-aos="fade-up" data-aos-duration="1200">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-sm font-medium text-slate-300">Available for Projects</span>
+                    <span class="text-xs text-slate-500">|</span>
+                    <span class="text-sm font-semibold text-primary">5+ Years Experience</span>
+                </div>
+
+                <!-- Heading -->
+                <h1 class="font-grotesk text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.05] mb-4">
+                    Syed Hassan Fida
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-400 mb-10 leading-relaxed max-w-3xl">
-                    Designing and delivering enterprise-grade <span class="text-white font-medium">ERP, CRM</span>, and scalable platforms. 
-                    Specialized in high-performance applications using <span class="text-white font-medium">MERN, Laravel, and AWS</span>.
+                <h2 class="font-grotesk text-2xl sm:text-3xl md:text-4xl font-semibold mb-6">
+                    <span class="text-gradient">Senior Full-Stack Engineer</span>
+                    <span class="text-slate-500">&</span>
+                    <span class="text-gradient"> Web Architect</span>
+                </h2>
+
+                <!-- Typing Text -->
+                <div class="flex items-center gap-3 mb-8 text-lg md:text-xl">
+                    <i data-lucide="terminal" class="w-5 h-5 text-primary"></i>
+                    <span class="text-slate-400">I specialize in</span>
+                    <span class="text-white font-semibold typing-cursor" x-text="typedText"></span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-lg md:text-xl text-slate-400 leading-relaxed max-w-3xl mb-10">
+                    Designing and delivering enterprise-grade <span class="text-white font-medium">ERP, CRM,</span> and scalable web platforms.
+                    Proven expertise in system architecture, backend optimization, and high-performance applications
+                    using <span class="text-white font-medium">MERN, Laravel, Next.js,</span> and <span class="text-white font-medium">AWS</span>.
                 </p>
-                <div class="flex flex-col sm:flex-row items-center gap-6">
-                    <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank" class="w-full sm:w-auto px-10 py-4 rounded-full bg-primary text-white font-bold hover:bg-indigo-500 shadow-lg shadow-primary/25 transition-all duration-300 flex items-center justify-center gap-2">
-                        <span>Hire Me on Upwork</span>
-                        <i data-lucide="external-link" class="w-4 h-4"></i>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-start gap-4">
+                    <a href="#projects"
+                       class="group px-8 py-4 rounded-2xl bg-primary text-white font-bold text-lg hover:bg-indigo-500 shadow-xl shadow-primary/20 transition-all duration-300 flex items-center gap-3">
+                        <span>View My Work</span>
+                        <i data-lucide="arrow-down-right" class="w-5 h-5 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform"></i>
                     </a>
-                    <a href="#portfolio" class="w-full sm:w-auto px-10 py-4 rounded-full glass text-white font-bold hover:bg-white/10 transition-all duration-300 text-center">
-                        Selected Projects
+                    <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank"
+                       class="group px-8 py-4 rounded-2xl glass text-white font-bold text-lg hover:bg-white/10 transition-all duration-300 flex items-center gap-3">
+                        <span>Hire Me</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
                     </a>
+                </div>
+
+                <!-- Mini Stats Row -->
+                <div class="flex flex-wrap gap-8 mt-14 pt-8 border-t border-white/5">
+                    <div>
+                        <div class="text-3xl font-grotesk font-bold text-white counter-value" x-data="{ count: 0 }" x-intersect.once="let i = setInterval(() => { if(count >= 5) { clearInterval(i); return; } count++; }, 200)" x-text="count + '+'">0+</div>
+                        <div class="text-sm text-slate-500 mt-1">Years Experience</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-grotesk font-bold text-white counter-value" x-data="{ count: 0 }" x-intersect.once="let i = setInterval(() => { if(count >= 20) { clearInterval(i); return; } count++; }, 80)" x-text="count + '+'">0+</div>
+                        <div class="text-sm text-slate-500 mt-1">Projects Delivered</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-grotesk font-bold text-white counter-value" x-data="{ count: 0 }" x-intersect.once="let i = setInterval(() => { if(count >= 80) { clearInterval(i); return; } count += 4; }, 50)" x-text="count + '%'">0%</div>
+                        <div class="text-sm text-slate-500 mt-1">Performance Boost</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-grotesk font-bold text-white counter-value" x-data="{ count: 0 }" x-intersect.once="let i = setInterval(() => { if(count >= 4) { clearInterval(i); return; } count++; }, 300)" x-text="count">0</div>
+                        <div class="text-sm text-slate-500 mt-1">Companies Served</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-30">
-            <i data-lucide="chevron-down" class="text-white w-8 h-8"></i>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
+            <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Scroll</span>
+            <div class="w-5 h-8 rounded-full border border-white/20 flex justify-center pt-1.5">
+                <div class="w-1 h-2 rounded-full bg-primary animate-bounce"></div>
+            </div>
         </div>
     </section>
 
-    <!-- Expertise / Services -->
-    <section id="services" class="py-24 bg-dark">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="font-outfit text-4xl font-bold text-white mb-4">Core Expertise</h2>
-                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass p-10 rounded-3xl hover:border-primary/50 transition-all duration-500 group" data-aos="fade-up">
-                    <i data-lucide="layout" class="text-primary w-12 h-12 mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="text-xl font-bold text-white mb-4">Enterprise Architecture</h3>
-                    <p class="text-slate-400 text-sm">Designing robust, scalable ERP and CRM systems with a focus on long-term maintainability.</p>
-                </div>
-                <div class="glass p-10 rounded-3xl hover:border-secondary/50 transition-all duration-500 group" data-aos="fade-up" data-aos-delay="100">
-                    <i data-lucide="zap" class="text-secondary w-12 h-12 mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="text-xl font-bold text-white mb-4">Backend Optimization</h3>
-                    <p class="text-slate-400 text-sm">Improving system performance by up to 80% through advanced database indexing and query tuning.</p>
-                </div>
-                <div class="glass p-10 rounded-3xl hover:border-accent/50 transition-all duration-500 group" data-aos="fade-up" data-aos-delay="200">
-                    <i data-lucide="cloud" class="text-accent w-12 h-12 mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="text-xl font-bold text-white mb-4">Cloud Infrastructure</h3>
-                    <p class="text-slate-400 text-sm">Deploying secure, auto-scaling environments using AWS, Docker, and Git-based CI/CD workflows.</p>
-                </div>
-            </div>
+    <!-- ============================================= -->
+    <!-- TECH MARQUEE -->
+    <!-- ============================================= -->
+    <div class="py-6 bg-surface border-y border-white/5 overflow-hidden relative">
+        <div class="flex animate-marquee marquee-track whitespace-nowrap">
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> React.js</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> Next.js</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> Node.js</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> Laravel</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> TypeScript</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> AWS</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> Docker</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> MongoDB</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> MySQL</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> Redis</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> GraphQL</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> Vue.js</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> React.js</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> Next.js</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> Node.js</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> Laravel</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> TypeScript</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> AWS</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> Docker</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> MongoDB</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> MySQL</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-primary"></i> Redis</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-secondary"></i> GraphQL</span>
+            <span class="mx-8 text-sm font-semibold text-slate-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-accent"></i> Vue.js</span>
         </div>
-    </section>
+    </div>
 
-    <!-- Profile Summary -->
-    <section id="about" class="py-24 bg-darker overflow-hidden">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div data-aos="fade-right">
-                    <h2 class="font-outfit text-4xl font-bold text-white mb-8">Professional Profile</h2>
-                    <p class="text-lg text-slate-400 leading-relaxed mb-6">
-                        Senior Software Engineer with a proven track record of designing scalable backend architectures and high-performance applications. Led cross-functional teams to improve system reliability and optimize performance across business-critical enterprise systems.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="glass p-6 rounded-2xl">
-                            <h4 class="text-primary font-bold text-3xl mb-1">5+</h4>
-                            <p class="text-sm text-slate-500 uppercase tracking-wider">Years Experience</p>
-                        </div>
-                        <div class="glass p-6 rounded-2xl">
-                            <h4 class="text-secondary font-bold text-3xl mb-1">20+</h4>
-                            <p class="text-sm text-slate-500 uppercase tracking-wider">Enterprise Apps</p>
+    <!-- ============================================= -->
+    <!-- ABOUT SECTION -->
+    <!-- ============================================= -->
+    <section id="about" class="py-28 bg-darker relative">
+        <div class="orb w-[400px] h-[400px] bg-primary/10 -top-32 -right-32"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <!-- Left: Visual -->
+                <div class="lg:col-span-5" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="relative">
+                        <!-- Animated gradient background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/20 rounded-3xl blur-3xl animate-pulse-glow"></div>
+
+                        <!-- GIF / Animated Background -->
+                        <div class="relative rounded-3xl overflow-hidden border border-white/10">
+                            <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif"
+                                 alt="Coding animation"
+                                 class="w-full aspect-square object-cover opacity-70">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darker via-transparent to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6">
+                                <div class="glass rounded-2xl p-5">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                        <span class="text-xs text-slate-500 ml-2 font-mono">terminal</span>
+                                    </div>
+                                    <code class="text-sm text-slate-300 font-mono">
+                                        <span class="text-primary">const</span> <span class="text-accent">architect</span> = {<br>
+                                        &nbsp;&nbsp;stack: <span class="text-secondary">"MERN | Laravel"</span>,<br>
+                                        &nbsp;&nbsp;passion: <span class="text-secondary">"Enterprise Systems"</span><br>
+                                        };
+                                    </code>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="relative" data-aos="fade-left">
-                    <div class="absolute -top-10 -right-10 w-64 h-64 bg-primary/20 blur-3xl rounded-full"></div>
-                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary/20 blur-3xl rounded-full"></div>
-                    <img src="https://img.freepik.com/free-vector/abstract-technology-particle-background_23-2148426649.jpg" alt="Abstract Tech" class="relative z-10 rounded-3xl opacity-80 shadow-2xl">
+
+                <!-- Right: Content -->
+                <div class="lg:col-span-7" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-px bg-primary"></div>
+                        <span class="text-primary text-sm font-bold uppercase tracking-widest">About Me</span>
+                    </div>
+
+                    <h2 class="font-grotesk text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                        Building <span class="text-gradient">Enterprise Systems</span> That Scale
+                    </h2>
+
+                    <p class="text-lg text-slate-400 leading-relaxed mb-6">
+                        Senior Full-Stack Engineer & Web Architect with <span class="text-white font-semibold">5+ years of experience</span>
+                        designing and delivering enterprise-grade ERP, CRM, and scalable web platforms. Proven expertise in system architecture,
+                        backend optimization, and high-performance applications using MERN, Laravel, Next.js, and AWS.
+                    </p>
+                    <p class="text-lg text-slate-400 leading-relaxed mb-10">
+                        Led cross-functional teams, improved system scalability, and optimized performance across
+                        business-critical applications. Passionate about clean architecture, performance-first design, and delivering
+                        production-ready solutions that make real business impact.
+                    </p>
+
+                    <!-- Expertise Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="glass rounded-2xl p-6 group hover:border-primary/30 transition-all duration-300">
+                            <i data-lucide="layout-dashboard" class="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-bold mb-1">System Architecture</h4>
+                            <p class="text-xs text-slate-500">ERP, CRM & Scalable Platforms</p>
+                        </div>
+                        <div class="glass rounded-2xl p-6 group hover:border-secondary/30 transition-all duration-300">
+                            <i data-lucide="zap" class="w-8 h-8 text-secondary mb-3 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-bold mb-1">Backend Optimization</h4>
+                            <p class="text-xs text-slate-500">80% Performance Improvement</p>
+                        </div>
+                        <div class="glass rounded-2xl p-6 group hover:border-accent/30 transition-all duration-300">
+                            <i data-lucide="cloud" class="w-8 h-8 text-accent mb-3 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-white font-bold mb-1">Cloud & DevOps</h4>
+                            <p class="text-xs text-slate-500">AWS, Docker, CI/CD</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Timeline -->
-    <section id="experience" class="py-24 bg-dark">
-        <div class="container mx-auto px-6">
+    <!-- ============================================= -->
+    <!-- EXPERIENCE TIMELINE -->
+    <!-- ============================================= -->
+    <section id="experience" class="py-28 bg-dark relative noise">
+        <div class="orb w-[500px] h-[500px] bg-secondary/10 top-1/2 -translate-y-1/2 -left-64"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <!-- Header -->
             <div class="text-center mb-20" data-aos="fade-up">
-                <h2 class="font-outfit text-4xl md:text-5xl font-bold text-white mb-4">Professional Journey</h2>
-                <p class="text-slate-500">A timeline of impact, leadership, and technical excellence.</p>
+                <div class="inline-flex items-center gap-3 mb-4">
+                    <div class="w-12 h-px bg-primary"></div>
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest">Career Path</span>
+                    <div class="w-12 h-px bg-primary"></div>
+                </div>
+                <h2 class="font-grotesk text-4xl md:text-5xl font-bold text-white mb-4">Professional Journey</h2>
+                <p class="text-slate-500 max-w-xl mx-auto">A timeline of impact, leadership, and technical excellence across 4 organizations.</p>
             </div>
 
-            <div class="max-w-4xl mx-auto relative pl-8 sm:pl-0">
-                <div class="timeline-line hidden sm:block sm:left-1/2"></div>
-                
+            <!-- Timeline -->
+            <div class="max-w-5xl mx-auto relative">
+                <!-- Center Line -->
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-secondary/50 to-accent/50"></div>
+
                 <!-- 3Amigos -->
-                <div class="relative mb-16 sm:mb-24" data-aos="fade-up">
-                    <div class="sm:flex items-center justify-between">
-                        <div class="sm:w-[45%] mb-4 sm:mb-0 text-right pr-12 hidden sm:block">
-                            <span class="text-primary font-bold text-lg">05/2024 – Present</span>
+                <div class="relative mb-16 md:mb-24" data-aos="fade-up">
+                    <div class="timeline-dot hidden md:block" style="background: #6366f1;"></div>
+                    <div class="md:flex items-start gap-16">
+                        <div class="md:w-1/2 md:text-right md:pr-16 mb-4 md:mb-0">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-2">05/2024 – Present</span>
+                            <h3 class="font-grotesk text-2xl font-bold text-white">3Amigos</h3>
+                            <p class="text-primary font-semibold">Software Engineer</p>
                         </div>
-                        <div class="timeline-item sm:left-1/2 -ml-[9px] hidden sm:block"></div>
-                        <div class="sm:w-[45%] glass p-8 rounded-3xl relative">
-                            <span class="sm:hidden text-primary font-bold block mb-2">05/2024 – Present</span>
-                            <h3 class="text-2xl font-bold text-white mb-2">3Amigos</h3>
-                            <h4 class="text-primary font-semibold mb-4">Software Engineer</h4>
-                            <ul class="text-slate-400 text-sm space-y-3">
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> <span>Designed scalable backend architecture for ERP & CRM systems.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> <span>Built RESTful APIs serving high-volume business workflows.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> <span>Optimized database queries, improving performance by 80%.</span></li>
-                            </ul>
+                        <div class="md:w-1/2 md:pl-16">
+                            <div class="glass rounded-2xl p-7 hover:border-primary/30 transition-all duration-300">
+                                <ul class="space-y-3 text-sm text-slate-400">
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>Designed and implemented scalable backend architecture for ERP & CRM systems.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>Built RESTful APIs serving high-volume business workflows.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>Optimized database queries, improving performance by 80%.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>Integrated third-party services and automated business processes.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>Deployed applications using Docker and AWS EC2.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Optima Geeks -->
-                <div class="relative mb-16 sm:mb-24" data-aos="fade-up">
-                    <div class="sm:flex items-center justify-between flex-row-reverse">
-                        <div class="sm:w-[45%] mb-4 sm:mb-0 text-left pl-12 hidden sm:block">
-                            <span class="text-secondary font-bold text-lg">05/2023 – 04/2024</span>
+                <div class="relative mb-16 md:mb-24" data-aos="fade-up">
+                    <div class="timeline-dot hidden md:block" style="background: #a855f7;"></div>
+                    <div class="md:flex items-start gap-16 md:flex-row-reverse">
+                        <div class="md:w-1/2 md:text-left md:pl-16 mb-4 md:mb-0">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-secondary/10 border border-secondary/20 text-secondary text-sm font-bold mb-2">05/2023 – 04/2024</span>
+                            <h3 class="font-grotesk text-2xl font-bold text-white">Optima Geeks</h3>
+                            <p class="text-secondary font-semibold">Software Engineer</p>
                         </div>
-                        <div class="timeline-item sm:left-1/2 -ml-[9px] hidden sm:block"></div>
-                        <div class="sm:w-[45%] glass p-8 rounded-3xl relative">
-                            <span class="sm:hidden text-secondary font-bold block mb-2">05/2023 – 04/2024</span>
-                            <h3 class="text-2xl font-bold text-white mb-2">Optima Geeks</h3>
-                            <h4 class="text-secondary font-semibold mb-4">Software Engineer</h4>
-                            <ul class="text-slate-400 text-sm space-y-3">
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i> <span>Architected scalable web applications using MERN and Laravel.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i> <span>Optimized MySQL and MongoDB indexing for faster retrieval.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i> <span>Containerized applications using Docker and maintained CI/CD.</span></li>
-                            </ul>
+                        <div class="md:w-1/2 md:pr-16">
+                            <div class="glass rounded-2xl p-7 hover:border-secondary/30 transition-all duration-300">
+                                <ul class="space-y-3 text-sm text-slate-400">
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Designed and developed scalable full-stack web applications using MERN stack, Laravel, and Python.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Architected and optimized backend systems to handle complex business workflows and API integrations.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Built RESTful APIs and integrated third-party services to enhance system functionality.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Developed responsive frontend interfaces using React.js, improving UX and performance.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Optimized database queries and indexing in MySQL and MongoDB.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Containerized applications using Docker and maintained version control using Git.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>Collaborated with cross-functional teams to deliver production-ready features.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Virtual Underdogs -->
-                <div class="relative mb-16 sm:mb-24" data-aos="fade-up">
-                    <div class="sm:flex items-center justify-between">
-                        <div class="sm:w-[45%] mb-4 sm:mb-0 text-right pr-12 hidden sm:block">
-                            <span class="text-accent font-bold text-lg">01/2022 – 04/2023</span>
+                <div class="relative mb-16 md:mb-24" data-aos="fade-up">
+                    <div class="timeline-dot hidden md:block" style="background: #06b6d4;"></div>
+                    <div class="md:flex items-start gap-16">
+                        <div class="md:w-1/2 md:text-right md:pr-16 mb-4 md:mb-0">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-accent/10 border border-accent/20 text-accent text-sm font-bold mb-2">01/2022 – 04/2023</span>
+                            <h3 class="font-grotesk text-2xl font-bold text-white">Virtual Underdogs</h3>
+                            <p class="text-accent font-semibold">Backend Laravel Developer</p>
                         </div>
-                        <div class="timeline-item sm:left-1/2 -ml-[9px] hidden sm:block"></div>
-                        <div class="sm:w-[45%] glass p-8 rounded-3xl relative">
-                            <span class="sm:hidden text-accent font-bold block mb-2">01/2022 – 04/2023</span>
-                            <h3 class="text-2xl font-bold text-white mb-2">Virtual Underdogs</h3>
-                            <h4 class="text-accent font-semibold mb-4">Backend Laravel Developer</h4>
-                            <ul class="text-slate-400 text-sm space-y-3">
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i> <span>Led backend architecture for a scalable CRM system.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i> <span>Implemented RBAC and secure RESTful API integrations.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i> <span>Mentored junior developers and performed code reviews.</span></li>
-                            </ul>
+                        <div class="md:w-1/2 md:pl-16">
+                            <div class="glass rounded-2xl p-7 hover:border-accent/30 transition-all duration-300">
+                                <ul class="space-y-3 text-sm text-slate-400">
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>Led backend architecture design for a scalable CRM system, ensuring high performance.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>Designed secure REST APIs supporting complex business processes and third-party integrations.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>Implemented authentication and role-based access control using Laravel best practices.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>Optimized relational database structures and query performance in MySQL.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>Mentored junior developers and conducted code reviews for clean architecture.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>Collaborated with frontend teams (React.js) to ensure seamless API integration.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Flitkick Innovations -->
                 <div class="relative" data-aos="fade-up">
-                    <div class="sm:flex items-center justify-between flex-row-reverse">
-                        <div class="sm:w-[45%] mb-4 sm:mb-0 text-left pl-12 hidden sm:block">
-                            <span class="text-primary font-bold text-lg">10/2020 – 12/2021</span>
+                    <div class="timeline-dot hidden md:block" style="background: #f59e0b;"></div>
+                    <div class="md:flex items-start gap-16 md:flex-row-reverse">
+                        <div class="md:w-1/2 md:text-left md:pl-16 mb-4 md:mb-0">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-bold mb-2">10/2020 – 12/2021</span>
+                            <h3 class="font-grotesk text-2xl font-bold text-white">Flitkick Innovations FZE</h3>
+                            <p class="text-amber-400 font-semibold">Associate Software Engineer</p>
                         </div>
-                        <div class="timeline-item sm:left-1/2 -ml-[9px] hidden sm:block"></div>
-                        <div class="sm:w-[45%] glass p-8 rounded-3xl relative">
-                            <span class="sm:hidden text-primary font-bold block mb-2">10/2020 – 12/2021</span>
-                            <h3 class="text-2xl font-bold text-white mb-2">Flitkick Innovations</h3>
-                            <h4 class="text-primary font-semibold mb-4">Associate Software Engineer</h4>
-                            <ul class="text-slate-400 text-sm space-y-3">
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> <span>Led ERP project development lifecycle.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> <span>Designed database schemas and optimized MySQL queries.</span></li>
-                                <li class="flex gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> <span>Built interactive frontend components using React.js.</span></li>
-                            </ul>
+                        <div class="md:w-1/2 md:pr-16">
+                            <div class="glass rounded-2xl p-7 hover:border-amber-500/30 transition-all duration-300">
+                                <ul class="space-y-3 text-sm text-slate-400">
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Contributed to development of enterprise ERP and CRM systems.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Led the ERP project development lifecycle, overseeing backend and frontend integration.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Designed database schemas and optimized queries using MySQL.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Developed RESTful APIs and implemented core business workflows using PHP (Laravel).</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Built interactive frontend components using JavaScript and React.js.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Improved performance through caching strategies and backend optimization.</li>
+                                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>Utilized Docker and Git for containerization and version control.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Projects Grid -->
-    <section id="portfolio" class="py-24 bg-darker">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-                <div data-aos="fade-right">
-                    <h2 class="font-outfit text-4xl md:text-5xl font-bold text-white mb-4">Enterprise Case Studies</h2>
-                    <p class="text-slate-500 max-w-xl">Deep-dive into technical achievements and complex solution deliveries.</p>
-                </div>
-                <div class="flex gap-4" data-aos="fade-left">
-                    <div class="px-6 py-2 rounded-full glass border-primary/30 text-primary font-bold uppercase tracking-widest text-xs">Featured Work</div>
+    <!-- ============================================= -->
+    <!-- PROJECTS SECTION -->
+    <!-- ============================================= -->
+    <section id="projects" class="py-28 bg-darker relative">
+        <div class="orb w-[500px] h-[500px] bg-accent/10 bottom-0 -right-48"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8" data-aos="fade-up">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-px bg-primary"></div>
+                        <span class="text-primary text-sm font-bold uppercase tracking-widest">Portfolio</span>
+                    </div>
+                    <h2 class="font-grotesk text-4xl md:text-5xl font-bold text-white mb-3">Featured Projects</h2>
+                    <p class="text-slate-500 max-w-xl">Enterprise case studies showcasing complex architectures and scalable systems.</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- OnwardOps -->
-                <div class="glass relative rounded-[2.5rem] overflow-hidden hover:border-primary/50 transition-all duration-500 group" data-aos="zoom-in">
-                    <div class="aspect-video bg-gradient-to-br from-indigo-900 to-dark relative overflow-hidden">
-                        <img src="https://img.freepik.com/free-photo/industrial-design-concept-3d-render_23-2149303541.jpg" alt="Service Platform" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <i data-lucide="shield-check" class="text-primary w-20 h-20 opacity-40 group-hover:scale-125 transition-transform duration-500"></i>
-                        </div>
-                    </div>
-                    <div class="p-10">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-2">OnwardOps</h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">Laravel</span>
-                                    <span class="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">Node.js</span>
-                                    <span class="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">RBAC</span>
-                                </div>
+            <!-- Project 1: OnwardOps (Full Width) -->
+            <div class="mb-10" data-aos="fade-up">
+                <div class="project-card animated-border group cursor-pointer">
+                    <div class="bg-surface rounded-3xl overflow-hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-2">
+                            <div class="project-img-wrap aspect-video lg:aspect-auto">
+                                <img src="https://image.thum.io/get/width/800/crop/600/https://onwardops.com"
+                                     alt="OnwardOps Enterprise Platform"
+                                     class="w-full h-full object-cover"
+                                     loading="lazy"
+                                     onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop';this.onerror=null;">
+                                <div class="project-overlay"></div>
                             </div>
-                            <a href="https://onwardops.org" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-primary transition-all text-white">
-                                <i data-lucide="external-link"></i>
-                            </a>
+                            <div class="p-8 lg:p-12 flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase">Enterprise Platform</span>
+                                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-slate-400">Featured</span>
+                                </div>
+                                <h3 class="font-grotesk text-3xl font-bold text-white mb-4">OnwardOps</h3>
+                                <p class="text-slate-400 mb-6 leading-relaxed">
+                                    Enterprise Service Platform — Designed and implemented scalable backend architecture using Laravel & Node.js.
+                                    Built secure REST APIs with role-based access control and authentication. Optimized MySQL database structure
+                                    for efficient data retrieval. Integrated third-party services and automated business workflows.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">Laravel</span>
+                                    <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">Node.js</span>
+                                    <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">MySQL</span>
+                                    <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">RBAC</span>
+                                    <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">REST APIs</span>
+                                </div>
+                                <a href="https://onwardops.com" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-4 transition-all duration-300">
+                                    <span>View Live Project</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </a>
+                            </div>
                         </div>
-                        <p class="text-slate-400 mb-6 leading-relaxed">Enterprise Service Platform for veterans. Implemented scalable architecture with complex RBAC and automated business workflows.</p>
                     </div>
                 </div>
+            </div>
 
+            <!-- Projects Grid (2x2) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
                 <!-- Solidariteit -->
-                <div class="glass relative rounded-[2.5rem] overflow-hidden hover:border-secondary/50 transition-all duration-500 group" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="aspect-video bg-gradient-to-br from-purple-900 to-dark relative overflow-hidden">
-                        <img src="https://img.freepik.com/free-photo/cloud-computing-technology-abstract-background_53876-124618.jpg" alt="Dynamic Web" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <i data-lucide="layers" class="text-secondary w-20 h-20 opacity-40 group-hover:scale-125 transition-transform duration-500"></i>
-                        </div>
-                    </div>
-                    <div class="p-10">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Solidariteit</h3>
+                <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-surface rounded-3xl overflow-hidden">
+                        <div class="project-img-wrap aspect-video">
+                            <img src="https://image.thum.io/get/width/800/crop/500/https://solidariteit.co.za"
+                                 alt="Solidariteit Platform"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop';this.onerror=null;">
+                            <div class="project-overlay"></div>
+                            <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs font-bold text-secondary uppercase bg-secondary/10 px-3 py-1 rounded-full">PHP Laravel</span>
-                                    <span class="text-xs font-bold text-secondary uppercase bg-secondary/10 px-3 py-1 rounded-full">API Optimization</span>
+                                    <span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-bold uppercase">PHP Laravel</span>
+                                    <span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-bold uppercase">REST APIs</span>
+                                    <span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-bold uppercase">Mobile + Web</span>
                                 </div>
                             </div>
-                            <a href="https://solidariteit.co.za/en" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-secondary transition-all text-white">
-                                <i data-lucide="external-link"></i>
-                            </a>
                         </div>
-                        <p class="text-slate-400 mb-6 leading-relaxed">Dynamic web and mobile platform. Optimized REST APIs and improved system maintainability through major refactoring.</p>
-                    </div>
-                </div>
-
-                <!-- Skylead -->
-                <div class="glass relative rounded-[2.5rem] overflow-hidden hover:border-accent/50 transition-all duration-500 group" data-aos="zoom-in">
-                    <div class="aspect-video bg-gradient-to-br from-cyan-900 to-dark relative overflow-hidden">
-                        <img src="https://img.freepik.com/free-photo/social-media-marketing-concept-marketing-strategy-analysis-report-digital-tablet_1150-13619.jpg" alt="Automation Platform" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <i data-lucide="send" class="text-accent w-20 h-20 opacity-40 group-hover:scale-125 transition-transform duration-500"></i>
-                        </div>
-                    </div>
-                    <div class="p-10">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Skylead</h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs font-bold text-accent uppercase bg-accent/10 px-3 py-1 rounded-full">Next.js</span>
-                                    <span class="text-xs font-bold text-accent uppercase bg-accent/10 px-3 py-1 rounded-full">SaaS</span>
-                                    <span class="text-xs font-bold text-accent uppercase bg-accent/10 px-3 py-1 rounded-full">Automation</span>
-                                </div>
+                        <div class="p-7">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-grotesk text-xl font-bold text-white">Solidariteit</h3>
+                                <a href="https://solidariteit.co.za" target="_blank" rel="noopener noreferrer"
+                                   class="w-9 h-9 rounded-xl glass-light flex items-center justify-center hover:bg-secondary/20 transition-all text-slate-400 hover:text-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
                             </div>
-                            <a href="https://skylead.io" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-accent transition-all text-white">
-                                <i data-lucide="external-link"></i>
-                            </a>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                Dynamic Web & Mobile Platform — Contributed to backend feature development and API optimization.
+                                Developed and maintained REST APIs serving both web and mobile clients. Improved maintainability
+                                through backend refactoring and cross-functional collaboration.
+                            </p>
                         </div>
-                        <p class="text-slate-400 mb-6 leading-relaxed">Frontend architecture for an AI-driven automation SaaS. Focused on performance-first, SEO-optimized solutions with complex state management.</p>
                     </div>
                 </div>
 
                 <!-- Jahavl.com -->
-                <div class="glass relative rounded-[2.5rem] overflow-hidden hover:border-accent/50 transition-all duration-500 group" data-aos="zoom-in">
-                    <div class="aspect-video bg-gradient-to-br from-cyan-900 to-dark relative overflow-hidden">
-                        <img src="https://img.freepik.com/free-photo/shopping-cart-interface-concept_23-2149303541.jpg" alt="eCommerce" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <i data-lucide="shopping-cart" class="text-accent w-20 h-20 opacity-40 group-hover:scale-125 transition-transform duration-500"></i>
-                        </div>
-                    </div>
-                    <div class="p-10">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Jahavl.com</h3>
+                <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-surface rounded-3xl overflow-hidden">
+                        <div class="project-img-wrap aspect-video">
+                            <img src="https://image.thum.io/get/width/800/crop/500/https://jahavl.com"
+                                 alt="Jahavl B2B eCommerce"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop';this.onerror=null;">
+                            <div class="project-overlay"></div>
+                            <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs font-bold text-accent uppercase bg-accent/10 px-3 py-1 rounded-full">B2B</span>
-                                    <span class="text-xs font-bold text-accent uppercase bg-accent/10 px-3 py-1 rounded-full">React</span>
-                                    <span class="text-xs font-bold text-accent uppercase bg-accent/10 px-3 py-1 rounded-full">Order Mgmt</span>
+                                    <span class="px-2 py-0.5 rounded bg-accent/20 text-accent text-[10px] font-bold uppercase">React.js</span>
+                                    <span class="px-2 py-0.5 rounded bg-accent/20 text-accent text-[10px] font-bold uppercase">MySQL</span>
+                                    <span class="px-2 py-0.5 rounded bg-accent/20 text-accent text-[10px] font-bold uppercase">B2B eCommerce</span>
                                 </div>
                             </div>
-                            <a href="https://jahavl.com" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-accent transition-all text-white">
-                                <i data-lucide="external-link"></i>
-                            </a>
                         </div>
-                        <p class="text-slate-400 mb-6 leading-relaxed">B2B eCommerce system with multi-user roles and transactional data integrity via MySQL.</p>
+                        <div class="p-7">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-grotesk text-xl font-bold text-white">Jahavl.com</h3>
+                                <a href="https://jahavl.com" target="_blank" rel="noopener noreferrer"
+                                   class="w-9 h-9 rounded-xl glass-light flex items-center justify-center hover:bg-accent/20 transition-all text-slate-400 hover:text-accent">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                B2B eCommerce Management System — Architected backend workflows for multi-user role management
+                                and order processing. Designed relational database schema using MySQL for transactional data.
+                                Built scalable frontend components using React.js.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- CuddleClones -->
-                <div class="glass relative rounded-[2.5rem] overflow-hidden hover:border-primary/50 transition-all duration-500 group" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="aspect-video bg-gradient-to-br from-blue-900 to-dark relative overflow-hidden">
-                        <img src="https://img.freepik.com/free-photo/digital-payment-concept-credit-card-background_53876-124618.jpg" alt="Payment" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <i data-lucide="credit-card" class="text-primary w-20 h-20 opacity-40 group-hover:scale-125 transition-transform duration-500"></i>
-                        </div>
-                    </div>
-                    <div class="p-10">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-2">CuddleClones</h3>
+                <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-surface rounded-3xl overflow-hidden">
+                        <div class="project-img-wrap aspect-video">
+                            <img src="https://image.thum.io/get/width/800/crop/500/https://cuddleclones.com"
+                                 alt="CuddleClones eCommerce"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=500&fit=crop';this.onerror=null;">
+                            <div class="project-overlay"></div>
+                            <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">Custom Logic</span>
-                                    <span class="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">Shopify</span>
-                                    <span class="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">React</span>
+                                    <span class="px-2 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold uppercase">React.js</span>
+                                    <span class="px-2 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold uppercase">Tailwind CSS</span>
+                                    <span class="px-2 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold uppercase">Payment API</span>
                                 </div>
                             </div>
-                            <a href="https://cuddleclones.com" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-primary transition-all text-white">
-                                <i data-lucide="external-link"></i>
-                            </a>
                         </div>
-                        <p class="text-slate-400 mb-6 leading-relaxed">Custom eCommerce workflows and pricing logic, integrated with automated checkout processes.</p>
+                        <div class="p-7">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-grotesk text-xl font-bold text-white">CuddleClones</h3>
+                                <a href="https://cuddleclones.com" target="_blank" rel="noopener noreferrer"
+                                   class="w-9 h-9 rounded-xl glass-light flex items-center justify-center hover:bg-primary/20 transition-all text-slate-400 hover:text-primary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                Custom eCommerce Platform — Developed backend services for custom order processing and dynamic pricing logic.
+                                Integrated payment gateways and third-party APIs. Optimized checkout workflow and implemented
+                                responsive UI using React.js & Tailwind CSS.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Redefine.church -->
-                <div class="glass relative rounded-[2.5rem] overflow-hidden hover:border-secondary/50 transition-all duration-500 group" data-aos="zoom-in">
-                    <div class="aspect-video bg-gradient-to-br from-purple-900 to-dark relative overflow-hidden">
-                        <img src="https://img.freepik.com/free-photo/view-concert-people-holding-mobile-phones_23-2149303541.jpg" alt="Streaming" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <i data-lucide="video" class="text-secondary w-20 h-20 opacity-40 group-hover:scale-125 transition-transform duration-500"></i>
-                        </div>
-                    </div>
-                    <div class="p-10">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-2">Redefine.church</h3>
+                <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-surface rounded-3xl overflow-hidden">
+                        <div class="project-img-wrap aspect-video">
+                            <img src="https://image.thum.io/get/width/800/crop/500/https://redefine.church"
+                                 alt="Redefine Church Platform"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&h=500&fit=crop';this.onerror=null;">
+                            <div class="project-overlay"></div>
+                            <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs font-bold text-secondary uppercase bg-secondary/10 px-3 py-1 rounded-full">Live Streaming</span>
-                                    <span class="text-xs font-bold text-secondary uppercase bg-secondary/10 px-3 py-1 rounded-full">WebSockets</span>
-                                    <span class="text-xs font-bold text-secondary uppercase bg-secondary/10 px-3 py-1 rounded-full">AWS</span>
+                                    <span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-bold uppercase">WebSockets</span>
+                                    <span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-bold uppercase">Docker</span>
+                                    <span class="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-bold uppercase">AWS</span>
                                 </div>
                             </div>
-                            <a href="https://redefine.church" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-secondary transition-all text-white">
-                                <i data-lucide="external-link"></i>
-                            </a>
                         </div>
-                        <p class="text-slate-400 mb-6 leading-relaxed">Live streaming and media platform. Integrated real-time chat with WebSockets and optimized deployment using Docker.</p>
+                        <div class="p-7">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-grotesk text-xl font-bold text-white">Redefine.church</h3>
+                                <a href="https://redefine.church" target="_blank" rel="noopener noreferrer"
+                                   class="w-9 h-9 rounded-xl glass-light flex items-center justify-center hover:bg-secondary/20 transition-all text-slate-400 hover:text-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                Live Streaming & Media Platform — Designed backend services for live streaming workflows.
+                                Integrated real-time features using WebSockets for interactive chat. Implemented media recording
+                                and content management. Optimized deployment using Docker & AWS.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-24 bg-dark">
-        <div class="container mx-auto px-6">
+    <!-- ============================================= -->
+    <!-- SKILLS SECTION -->
+    <!-- ============================================= -->
+    <section id="skills" class="py-28 bg-dark relative noise">
+        <div class="orb w-[400px] h-[400px] bg-primary/10 top-0 left-1/4"></div>
+
+        <!-- Animated Video/GIF Background Strip -->
+        <div class="absolute inset-0 opacity-[0.03] z-0">
+            <img src="https://media.giphy.com/media/ZVik7pBtu9dNS/giphy.gif" alt="" class="w-full h-full object-cover" loading="lazy">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <!-- Header -->
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="font-outfit text-4xl font-bold text-white mb-4">Technical Arsenal</h2>
-                <p class="text-slate-500">The battle-tested technologies I use to build world-class products.</p>
+                <div class="inline-flex items-center gap-3 mb-4">
+                    <div class="w-12 h-px bg-primary"></div>
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest">Tech Stack</span>
+                    <div class="w-12 h-px bg-primary"></div>
+                </div>
+                <h2 class="font-grotesk text-4xl md:text-5xl font-bold text-white mb-4">Technical Arsenal</h2>
+                <p class="text-slate-500 max-w-xl mx-auto">Battle-tested technologies powering enterprise-grade applications.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Backend -->
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up">
-                    <i data-lucide="server" class="text-primary w-10 h-10 mb-6"></i>
-                    <h3 class="text-white font-bold text-xl mb-6">Backend</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Node.js</span>
-                        <span class="px-3 py-1 rounded-lg bg-primary/20 border border-primary/30 text-xs font-bold text-primary">Laravel</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Express</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Python</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">REST APIs</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">GraphQL</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Backend Skills -->
+                <div class="glass rounded-2xl p-8 hover:border-primary/30 transition-all duration-300 group" data-aos="fade-up">
+                    <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                        <i data-lucide="server" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-6">Backend</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Node.js / Express</span><span class="text-primary font-semibold">95%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-primary to-primary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='95%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">PHP (Laravel)</span><span class="text-primary font-semibold">95%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-primary to-primary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='95%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Python</span><span class="text-primary font-semibold">80%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-primary to-primary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='80%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">REST APIs / GraphQL</span><span class="text-primary font-semibold">92%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-primary to-primary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='92%'"></div></div>
+                        </div>
                     </div>
                 </div>
-                <!-- Frontend -->
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
-                    <i data-lucide="layout" class="text-secondary w-10 h-10 mb-6"></i>
-                    <h3 class="text-white font-bold text-xl mb-6">Frontend</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-lg bg-secondary/20 border border-secondary/30 text-xs font-bold text-secondary">React.js</span>
-                        <span class="px-3 py-1 rounded-lg bg-secondary/20 border border-secondary/30 text-xs font-bold text-secondary">Next.js</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">TypeScript</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Tailwind CSS</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Vue.js</span>
+
+                <!-- Frontend Skills -->
+                <div class="glass rounded-2xl p-8 hover:border-secondary/30 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
+                        <i data-lucide="layout" class="w-6 h-6 text-secondary"></i>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-6">Frontend</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">React.js</span><span class="text-secondary font-semibold">93%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-secondary to-secondary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='93%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Next.js</span><span class="text-secondary font-semibold">90%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-secondary to-secondary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='90%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">TypeScript / Redux</span><span class="text-secondary font-semibold">88%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-secondary to-secondary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='88%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Tailwind CSS / Vue.js</span><span class="text-secondary font-semibold">85%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-secondary to-secondary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='85%'"></div></div>
+                        </div>
                     </div>
                 </div>
+
                 <!-- Databases -->
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
-                    <i data-lucide="database" class="text-accent w-10 h-10 mb-6"></i>
-                    <h3 class="text-white font-bold text-xl mb-6">Databases</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-lg bg-accent/20 border border-accent/30 text-xs font-bold text-accent">MySQL</span>
-                        <span class="px-3 py-1 rounded-lg bg-accent/20 border border-accent/30 text-xs font-bold text-accent">MongoDB</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Redis</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">PostgreSQL</span>
+                <div class="glass rounded-2xl p-8 hover:border-accent/30 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
+                        <i data-lucide="database" class="w-6 h-6 text-accent"></i>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-6">Databases</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">MySQL</span><span class="text-accent font-semibold">95%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-accent to-accent/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='95%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">MongoDB</span><span class="text-accent font-semibold">90%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-accent to-accent/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='90%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Redis</span><span class="text-accent font-semibold">82%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-accent to-accent/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='82%'"></div></div>
+                        </div>
                     </div>
                 </div>
+
                 <!-- DevOps -->
-                <div class="glass p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="300">
-                    <i data-lucide="cloud" class="text-white w-10 h-10 mb-6"></i>
-                    <h3 class="text-white font-bold text-xl mb-6">DevOps</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-lg bg-white/20 border border-white/30 text-xs font-bold text-white">AWS</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/20 border border-white/30 text-xs font-bold text-white">Docker</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">CI/CD</span>
-                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium">Git</span>
+                <div class="glass rounded-2xl p-8 hover:border-amber-400/30 transition-all duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-6 group-hover:bg-amber-500/20 transition-colors">
+                        <i data-lucide="cloud" class="w-6 h-6 text-amber-400"></i>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-6">DevOps</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">AWS (EC2, S3, CloudFront)</span><span class="text-amber-400 font-semibold">90%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-amber-400 to-amber-400/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='90%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Docker</span><span class="text-amber-400 font-semibold">88%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-amber-400 to-amber-400/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='88%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">CI/CD Pipelines</span><span class="text-amber-400 font-semibold">85%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-amber-400 to-amber-400/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='85%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Git / Version Control</span><span class="text-amber-400 font-semibold">95%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-amber-400 to-amber-400/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='95%'"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Education & Footer -->
-    <section class="py-24 bg-darker">
-        <div class="container mx-auto px-6 text-center">
-            <div class="max-w-2xl mx-auto glass p-12 rounded-3xl" data-aos="fade-up">
-                <i data-lucide="graduation-cap" class="text-primary w-12 h-12 mx-auto mb-6"></i>
-                <h3 class="text-white font-bold text-2xl mb-2">Education</h3>
-                <h4 class="text-primary font-semibold text-lg mb-2">BS in Computer Science</h4>
-                <p class="text-slate-500">Bahria University Navy | 2018 - 2022</p>
+    <!-- ============================================= -->
+    <!-- EDUCATION SECTION -->
+    <!-- ============================================= -->
+    <section id="education" class="py-28 bg-darker relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <div class="inline-flex items-center gap-3 mb-4">
+                    <div class="w-12 h-px bg-primary"></div>
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest">Education</span>
+                    <div class="w-12 h-px bg-primary"></div>
+                </div>
+                <h2 class="font-grotesk text-4xl md:text-5xl font-bold text-white mb-4">Academic Background</h2>
             </div>
-        </div>
-    </section>
 
-    <!-- Contact CTA -->
-    <section id="contact" class="pb-24 bg-darker overflow-hidden">
-        <div class="container mx-auto px-6">
-            <div class="relative glass bg-gradient-to-tr from-primary/5 to-secondary/5 p-12 md:p-24 rounded-[4rem] text-center border border-white/5 overflow-hidden" data-aos="zoom-in">
-                <div class="absolute inset-0 bg-primary opacity-5 blur-[120px]"></div>
-                <h2 class="font-outfit text-4xl md:text-7xl font-bold text-white mb-8 relative z-10">Build the <span class="text-gradient">Next Big Thing</span></h2>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10">
-                    <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank" class="w-full sm:w-auto px-12 py-5 rounded-full bg-primary text-white font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/30">
-                        Hire Me on Upwork
-                    </a>
-                    <a href="https://github.com/Syed-Hassan-Fida" target="_blank" class="w-full sm:w-auto px-12 py-5 rounded-full glass text-white font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">
-                        <i data-lucide="github"></i>
-                        <span>GitHub</span>
-                    </a>
+            <div class="max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass rounded-3xl p-10 text-center hover:border-primary/30 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-secondary/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="graduation-cap" class="w-8 h-8 text-primary"></i>
+                        </div>
+                        <h3 class="font-grotesk text-2xl font-bold text-white mb-2">Bachelor's in Computer Science</h3>
+                        <p class="text-primary font-semibold text-lg mb-2">Bahria University Navy</p>
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-slate-400 text-sm">
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                            <span>2018 – 2022</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm">
-        <p>© 2024 Syed Hassan Fida. Built with Precision using Tailwind & Alpine.js.</p>
+    <!-- ============================================= -->
+    <!-- CTA SECTION -->
+    <!-- ============================================= -->
+    <section class="py-28 bg-dark relative noise overflow-hidden">
+        <!-- Video BG -->
+        <div class="video-bg">
+            <video autoplay muted loop playsinline class="opacity-10">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-particles-in-space-like-environment-37564-large.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-dark via-dark/80 to-dark"></div>
+        </div>
+
+        <div class="orb w-[600px] h-[600px] bg-primary/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10" data-aos="zoom-in">
+            <div class="mb-6">
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Ready for new challenges
+                </span>
+            </div>
+            <h2 class="font-grotesk text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Let's Build the <br><span class="text-gradient">Next Big Thing</span>
+            </h2>
+            <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
+                Looking for a Senior Full-Stack Engineer to architect your next enterprise platform? Let's connect.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank" rel="noopener noreferrer"
+                   class="group w-full sm:w-auto px-10 py-5 rounded-2xl bg-primary text-white font-bold text-lg hover:bg-indigo-500 shadow-2xl shadow-primary/25 transition-all duration-300 flex items-center justify-center gap-3">
+                    <span>Hire Me on Upwork</span>
+                    <i data-lucide="arrow-up-right" class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                </a>
+                <a href="https://github.com/Syed-Hassan-Fida" target="_blank" rel="noopener noreferrer"
+                   class="group w-full sm:w-auto px-10 py-5 rounded-2xl glass text-white font-bold text-lg hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                    <span>View GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- FOOTER -->
+    <!-- ============================================= -->
+    <footer class="py-10 bg-darker border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <span class="text-white font-grotesk font-bold text-xs">SH</span>
+                    </div>
+                    <span class="text-sm text-slate-500">&copy; 2024 Syed Hassan Fida. Crafted with precision.</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/Syed-Hassan-Fida" target="_blank" rel="noopener noreferrer"
+                       class="w-10 h-10 rounded-xl glass-light flex items-center justify-center hover:bg-white/10 hover:text-white transition-all text-slate-500">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://www.upwork.com/freelancers/~0190e1383dae490080" target="_blank" rel="noopener noreferrer"
+                       class="w-10 h-10 rounded-xl glass-light flex items-center justify-center hover:bg-white/10 hover:text-white transition-all text-slate-500">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <!-- Back to Top -->
-    <button x-show="scrolled" 
-            x-transition 
+    <!-- ============================================= -->
+    <!-- BACK TO TOP -->
+    <!-- ============================================= -->
+    <button x-show="scrolled" x-transition
             @click="window.scrollTo({top: 0, behavior: 'smooth'})"
-            class="fixed bottom-10 right-10 w-14 h-14 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 transition-all z-50">
-        <i data-lucide="arrow-up"></i>
+            class="fixed bottom-8 right-8 w-12 h-12 rounded-2xl bg-primary/90 text-white shadow-2xl shadow-primary/30 flex items-center justify-center hover:scale-110 hover:bg-primary transition-all z-50"
+            x-cloak>
+        <i data-lucide="chevron-up" class="w-5 h-5"></i>
     </button>
 
-    <!-- Scripts -->
+    <!-- ============================================= -->
+    <!-- SCRIPTS -->
+    <!-- ============================================= -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100,
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('loaded');
+            }, 800);
         });
+
+        // AOS Init
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 80,
+            easing: 'ease-out-cubic',
+        });
+
+        // Lucide Icons
         lucide.createIcons();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 
