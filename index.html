@@ -505,7 +505,9 @@
                         <div class="relative rounded-3xl overflow-hidden border border-white/10">
                             <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif"
                                  alt="Coding animation"
-                                 class="w-full aspect-square object-cover opacity-70">
+                                 class="w-full aspect-square object-cover opacity-70"
+                                 loading="lazy"
+                                 decoding="async">
                             <div class="absolute inset-0 bg-gradient-to-t from-darker via-transparent to-transparent"></div>
                             <div class="absolute bottom-6 left-6 right-6">
                                 <div class="glass rounded-2xl p-5">
@@ -720,11 +722,11 @@
                     <div class="bg-surface rounded-3xl overflow-hidden">
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <div class="project-img-wrap aspect-video lg:aspect-auto">
-                                <img src="https://image.thum.io/get/width/800/crop/600/https://onwardops.com"
+                                <img src="assets/images/portfolio/onwardops.png"
                                      alt="OnwardOps Enterprise Platform"
                                      class="w-full h-full object-cover"
-                                     loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop';this.onerror=null;">
+                                     loading="eager"
+                                     decoding="async">
                                 <div class="project-overlay"></div>
                             </div>
                             <div class="p-8 lg:p-12 flex flex-col justify-center">
@@ -762,11 +764,11 @@
                 <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="100">
                     <div class="bg-surface rounded-3xl overflow-hidden">
                         <div class="project-img-wrap aspect-video">
-                            <img src="https://image.thum.io/get/width/800/crop/500/https://solidariteit.co.za"
+                            <img src="assets/images/portfolio/solidariteit.png"
                                  alt="Solidariteit Platform"
                                  class="w-full h-full object-cover"
                                  loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop';this.onerror=null;">
+                                 decoding="async">
                             <div class="project-overlay"></div>
                             <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
@@ -797,11 +799,11 @@
                 <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="200">
                     <div class="bg-surface rounded-3xl overflow-hidden">
                         <div class="project-img-wrap aspect-video">
-                            <img src="https://image.thum.io/get/width/800/crop/500/https://jahavl.com"
+                            <img src="assets/images/portfolio/jahavl.png"
                                  alt="Jahavl B2B eCommerce"
                                  class="w-full h-full object-cover"
                                  loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop';this.onerror=null;">
+                                 decoding="async">
                             <div class="project-overlay"></div>
                             <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
@@ -832,11 +834,11 @@
                 <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="300">
                     <div class="bg-surface rounded-3xl overflow-hidden">
                         <div class="project-img-wrap aspect-video">
-                            <img src="https://image.thum.io/get/width/800/crop/500/https://cuddleclones.com"
+                            <img src="assets/images/portfolio/cuddleclones.png"
                                  alt="CuddleClones eCommerce"
                                  class="w-full h-full object-cover"
                                  loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=500&fit=crop';this.onerror=null;">
+                                 decoding="async">
                             <div class="project-overlay"></div>
                             <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
@@ -867,11 +869,11 @@
                 <div class="project-card animated-border group" data-aos="fade-up" data-aos-delay="400">
                     <div class="bg-surface rounded-3xl overflow-hidden">
                         <div class="project-img-wrap aspect-video">
-                            <img src="https://image.thum.io/get/width/800/crop/500/https://redefine.church"
+                            <img src="assets/images/portfolio/redefine-church.png"
                                  alt="Redefine Church Platform"
                                  class="w-full h-full object-cover"
                                  loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&h=500&fit=crop';this.onerror=null;">
+                                 decoding="async">
                             <div class="project-overlay"></div>
                             <div class="absolute bottom-4 left-4 right-4 z-10">
                                 <div class="flex flex-wrap gap-2">
@@ -907,10 +909,8 @@
     <section id="skills" class="py-28 bg-dark relative noise">
         <div class="orb w-[400px] h-[400px] bg-primary/10 top-0 left-1/4"></div>
 
-        <!-- Animated Video/GIF Background Strip -->
-        <div class="absolute inset-0 opacity-[0.03] z-0">
-            <img src="https://media.giphy.com/media/ZVik7pBtu9dNS/giphy.gif" alt="" class="w-full h-full object-cover" loading="lazy">
-        </div>
+        <!-- Subtle gradient background strip -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-secondary/[0.03] z-0 pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <!-- Header -->
@@ -943,6 +943,10 @@
                         <div>
                             <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Python</span><span class="text-primary font-semibold">80%</span></div>
                             <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-primary to-primary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='80%'"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Django (Python)</span><span class="text-primary font-semibold">78%</span></div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-primary to-primary/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='78%'"></div></div>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">REST APIs / GraphQL</span><span class="text-primary font-semibold">92%</span></div>
@@ -985,15 +989,15 @@
                     <h3 class="text-white font-bold text-lg mb-6">Databases</h3>
                     <div class="space-y-4">
                         <div>
-                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">MySQL</span><span class="text-accent font-semibold">95%</span></div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">MySQL (Relational)</span><span class="text-accent font-semibold">95%</span></div>
                             <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-accent to-accent/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='95%'"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">MongoDB</span><span class="text-accent font-semibold">90%</span></div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">MongoDB (NoSQL)</span><span class="text-accent font-semibold">90%</span></div>
                             <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-accent to-accent/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='90%'"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Redis</span><span class="text-accent font-semibold">82%</span></div>
+                            <div class="flex justify-between text-sm mb-1.5"><span class="text-slate-300">Redis (NoSQL Cache)</span><span class="text-accent font-semibold">82%</span></div>
                             <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="skill-bar-fill h-full bg-gradient-to-r from-accent to-accent/60 rounded-full" style="width: 0%" x-data x-intersect.once="$el.style.width='82%'"></div></div>
                         </div>
                     </div>
