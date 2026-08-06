@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://syed-hassan-fida.github.io/portfolio.github.io/sitemap.xml
