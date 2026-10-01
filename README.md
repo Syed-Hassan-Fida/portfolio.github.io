@@ -1,6 +1,6 @@
 # Syed Hassan Fida — Portfolio
 
-Personal portfolio site for **Syed Hassan Fida**, Senior Software Engineer (Backend & Distributed Systems).
+Personal portfolio site for **Syed Hassan Fida**, Software Engineer (PHP/Laravel · MERN · AI/RAG).
 
 **Live:** https://syed-hassan-fida.github.io/portfolio.github.io/
 
@@ -9,6 +9,11 @@ Personal portfolio site for **Syed Hassan Fida**, Senior Software Engineer (Back
 Single-page site covering About, Experience, Projects, Skills, Education, Writing, and Contact.
 All content is kept in sync with `assets/Syed-Hassan-Fida-Resume.pdf`, which is the source of truth —
 update the Resume first, then reflect any changes in `index.html`.
+
+Latest positioning emphasizes:
+- Dual-stack delivery: **PHP/Laravel** and **MERN**
+- Production **RAG / LLM** integrations (Solidariteit / SNP, CuddleClones)
+- Cloud & DevOps: **AWS EC2**, **Google Cloud**, **DigitalOcean**
 
 ## Stack
 
