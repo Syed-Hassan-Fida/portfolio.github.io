@@ -1,19 +1,26 @@
 # Syed Hassan Fida — Portfolio
 
-Personal portfolio site for **Syed Hassan Fida**, Software Engineer (PHP/Laravel · MERN · AI/RAG).
+Personal portfolio site for **Syed Hassan Fida**, Full Stack Software Engineer (Laravel · MERN · AWS · AI/RAG & LLM).
 
 **Live:** https://syed-hassan-fida.github.io/portfolio.github.io/
 
 ## Contents
 
 Single-page site covering About, Experience, Projects, Skills, Education, Writing, and Contact.
-All content is kept in sync with `assets/Syed-Hassan-Fida-Resume.pdf`, which is the source of truth —
-update the Resume first, then reflect any changes in `index.html`.
+Content is kept in sync with:
 
-Latest positioning emphasizes:
+- Resume: `assets/Syed-Hassan-Fida-Resume.pdf` (source: `~/Desktop/Syed-Hassan-Fida-Updated-Resume`)
+- LinkedIn headline/About positioning
+
+Update the resume first, copy the PDF into `assets/`, then reflect changes in `index.html`.
+
+## Latest positioning
+
+- **Title:** Full Stack Software Engineer | Laravel · MERN · AWS · AI/RAG & LLM Integrations
 - Dual-stack delivery: **PHP/Laravel** and **MERN**
 - Production **RAG / LLM** integrations (Solidariteit / SNP, CuddleClones)
-- Cloud & DevOps: **AWS EC2**, **Google Cloud**, **DigitalOcean**
+- Cloud & DevOps: **AWS EC2/S3/CloudFront**, **Google Cloud**, **DigitalOcean**, Docker, CI/CD
+- Open to Full Stack, Backend, and AI Integration roles (Lahore or remote)
 
 ## Stack
 
